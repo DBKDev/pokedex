@@ -1,9 +1,26 @@
-import React from "react";
+import React, {useEffect, useState} from 'react';
 import "../Styles/pokedexStyle.css"
 import IconPokeball from "../IconPokeball.png"
-import Card from "./Card";
+import Card from "./Card"
+import Info from "../Services/Info";
 
 const Pokedex = () => {
+
+    const [pokemons, setPokemons] = useState([]);
+
+    const fetchInfo = async () => {
+        try {
+            const response = await Info.getPokemons();
+            setPokemons(response.data.results)
+        }catch (e){
+            console.log(e);
+        }
+    }
+
+    useEffect(() => {
+        fetchInfo()
+    }, []);
+
     return <>
         <div className="titre">
             <img id="pokeball" src={IconPokeball}/>
@@ -12,8 +29,11 @@ const Pokedex = () => {
 
         </div>
         <div className="Container-card">
-            <Card/>
+            {pokemons.map(m => {
+            return <Card key= {m.name} pokemon={m}/>
+        })}
         </div>
+        
    </>;
 }
  
