@@ -31,6 +31,7 @@ const Pokedex = () => {
         <div className="Container-card">
             {pokemons.map(m => {
             return <Card key= {m.name} pokemon={m}/>
+                   
         })}
         </div>
         
